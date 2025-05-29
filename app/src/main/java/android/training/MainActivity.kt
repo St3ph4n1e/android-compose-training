@@ -22,13 +22,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            WelcomeScreen()
+            val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = "home"){
+                composable("home") {
+                    HomeScreen(onNavigate = { navController.navigate("second")})
+                }
+                composable("second") {
+                    SecondScreen(onBack = { navController.popBackStack()})
+                }
+
+            }
         }
     }
 }
@@ -43,8 +55,7 @@ fun GreetingPreview() {
 @Composable
 fun WelcomeScreen(){
 
-    var message by remember { mutableStateOf("Bienvenue dans mon app Android") }
-    var cliked by remember { mutableStateOf(false) }
+    var clicked by remember { mutableStateOf(false) }
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -52,17 +63,63 @@ fun WelcomeScreen(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        if(!clicked){
         Text(
-            text = message,
+            text = "Bienvenue dans mon app Android",
             fontSize = 24.sp
         )
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = {
-            message = "Merci de nous rejoindre"
-            cliked = true
-                }, enabled = !cliked) {
+            clicked = true
+                }) {
             Text("Continuer")
+        }
+        } else {
+            WelcomeMessage()
+            }
+    }
+}
+
+@Composable
+fun WelcomeMessage() {
+    Text(
+        text = "Félicitations, vous êtes sur l'écran suivant",
+        fontSize = 20.sp
+    )
+}
+
+@Composable
+fun HomeScreen(onNavigate: () -> Unit){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text("Ecran d'accueil", fontSize = 24.sp)
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(onClick = onNavigate) {
+            Text("Aller à l'écran suivant")
+        }
+    }
+}
+
+
+@Composable
+fun SecondScreen(onBack: () -> Unit) {
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text("Bienvenue sur le deuxième écran", fontSize = 24.sp)
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(onClick = onBack) {
+            Text("Retour à l'accueil")
         }
     }
 }
