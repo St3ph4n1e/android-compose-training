@@ -1,33 +1,78 @@
+# ======================
 # Gradle files
+# ======================
 .gradle/
 build/
+**/build/
 
-# Local configuration file (sdk path, etc)
+# ======================
+# Local configuration
+# ======================
 local.properties
 
-# Log/OS Files
+# ======================
+# Log / OS / IDE files
+# ======================
 *.log
+*.hprof
+*.DS_Store
+Thumbs.db
 
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.apk
-output-metadata.json
-
-# IntelliJ
-*.iml
+# ======================
+# Android Studio / IntelliJ
+# ======================
 .idea/
+*.iml
+*.ipr
+*.iws
+*.bak
+*.swp
+
+# Specific IntelliJ files
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
+usage.statistics.xml
+tasks.xml
 
-# Keystore files
+# ======================
+# Android specific
+# ======================
+captures/
+output-metadata.json
+*.apk
+*.ap_
+
+# External native builds
+.externalNativeBuild/
+.cxx/
+
+# ======================
+# Keystore files (ne jamais versionner !)
+# ======================
 *.jks
 *.keystore
 
-# Google Services (e.g. APIs or Firebase)
+# ======================
+# Google services (Firebase etc.)
+# ======================
 google-services.json
+app/google-services.json
 
-# Android Profiling
-*.hprof
+# ======================
+# Jetpack Compose Preview cache
+# ======================
+.idea/sonarlint/
+.idea/shelf/
+
+# ======================
+# Kotlin specific
+# ======================
+*.class
+*.kotlin_module
+
+# ======================
+# Misc
+# ======================
+*.orig
+*.rej
